@@ -20,6 +20,9 @@ class CreateEmployeesTable extends Migration
             $table->string('email')->unique();
             $table->string('contact');
             $table->string('designation');
+            $table->unsignedBigInteger('company_id');
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

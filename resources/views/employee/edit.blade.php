@@ -3,20 +3,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <form action="{{route('company.update',$company->id)}}" method="POST">
+                <form action="{{route('employee.update',$employee->id)}}" method="POST">
                     @csrf
                     @method('PUT')
-                    @include('company.form')
+                    @include('employee.form')
                 </form>
             </div>
         </div>
     </div>
 @endsection
-
-@section('modal')
-    @include('company.common')
-@endsection
-
 @section('js')
-    @include('company.js')
+    @include('employee.js')
 @endsection

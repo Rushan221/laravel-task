@@ -28,7 +28,8 @@ class CompanyController extends Controller
     {
         $cardHeader = 'Create a company';
         $departments = Department::all();
-        return view('company.create', compact('cardHeader', 'departments'));
+        $departmentIds = [];
+        return view('company.create', compact('cardHeader', 'departments','departmentIds'));
     }
 
     /**
@@ -53,16 +54,18 @@ class CompanyController extends Controller
                 'contact' => $input['contact']
             ]);
 
-            foreach ($input['departments'] as $department) {
-                CompanyDepartment::create([
-                    'company_id' => $company->id,
-                    'department_id' => $department
-                ]);
+            if(array_key_exists('departments',$input)){
+                foreach ($input['departments'] as $department) {
+                    CompanyDepartment::create([
+                        'company_id' => $company->id,
+                        'department_id' => $department
+                    ]);
+                }
             }
 
             DB::commit();
 
-            Alert::toast('Bank Created!', 'success');
+            Alert::toast('Company Created!', 'success');
             return redirect()->route('company.index');
         } catch (\Exception $th) {
             DB::rollback();
@@ -79,6 +82,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
         $company = Company::find($id);
+        $departmentIds = [];
         foreach ($company->departments as $department) {
             $departmentIds[] = $department->department_id;
         }
@@ -119,16 +123,19 @@ class CompanyController extends Controller
 
                 //remove all departments
                 CompanyDepartment::whereCompanyId($id)->delete();
-                //make new rows for comapny and departments
-                foreach ($input['departments'] as $department) {
-                    CompanyDepartment::create([
-                        'company_id' => $id,
-                        'department_id' => $department
-                    ]);
+                if (array_key_exists('departments', $input)) {
+                    //make new rows for comapny and departments
+                    foreach ($input['departments'] as $department) {
+                        CompanyDepartment::create([
+                            'company_id' => $id,
+                            'department_id' => $department
+                        ]);
+                    }
                 }
+
                 DB::commit();
                 Alert::toast('Company edited successfully.', 'success');
-            }catch (\Exception $th) {
+            } catch (\Exception $th) {
                 DB::rollback();
                 echo $th;
                 Alert::toast('Something Went Wrong!!', 'error');

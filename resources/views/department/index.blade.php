@@ -17,7 +17,6 @@
                             <tr>
                                 <th>S.N.</th>
                                 <th>Name</th>
-                                <th>Company</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -26,9 +25,8 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$department->name}}</td>
-                                    <td>{{$department->comapny->name}}</td>
                                     <td class="d-flex align-content-center">
-                                        <a href="{{ route('company.edit',$department->id) }}"
+                                        <a href="{{ route('department.edit',$department->id) }}"
                                            class="btn btn-primary btn-sm"
                                            title="Edit"><i class="fa fa-pen-to-square"></i></a>&nbsp;
                                         <a href="javascript:void(0)" class="btn btn-danger btn-sm delete-btn"
@@ -44,4 +42,43 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $('.delete-btn').click(function () {
+                let deleteBtn = $(this);
+                let departmentId = deleteBtn.attr('rel');
+                Swal.fire({
+                    title: 'Do you want to delete the Department?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Delete',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ route('department.destroy') }}",
+                            type: "POST",
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                departmentId
+                            },
+                            success: function (response) {
+                                if (response.status === 'success') {
+                                    deleteBtn.closest('tr').fadeOut(1000);
+                                    Swal.fire(response.message, '', 'success')
+                                } else {
+                                    Swal.fire(response.message, '', 'warning')
+                                }
+                            },
+                            error: function (err) {
+                                Swal.fire('Internal server error', '', 'error')
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
