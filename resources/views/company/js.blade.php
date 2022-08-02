@@ -38,7 +38,6 @@
                     alert('Internal server error');
                 }
             });
-
         });
     });
 </script>
