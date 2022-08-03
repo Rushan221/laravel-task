@@ -23,6 +23,7 @@
                         let department = response.department;
                         $("#department").prepend('<option value="' + department.id + '">' + department.name + '</option>');
                         $('#add-department-modal').modal('hide');
+                        Swal.fire('New Department has been added.', '', 'success')
                     } else if (response.status === 'failed') {
                         let errors = response.errors
                         for (let key of Object.keys(errors)) {

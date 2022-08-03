@@ -41,7 +41,7 @@
 
             <div class="form-group col-md-6 mb-3">
                 <label for="company">Company:</label>
-                <select name="company" id="company" class="form-control company-select">
+                <select name="company" id="company" class="form-control company-select" required>
                     <option value="">--- Select a company ---</option>
                     @foreach($companies as $company)
                         <option
