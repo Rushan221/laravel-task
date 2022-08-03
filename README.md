@@ -1,6 +1,6 @@
 # Laravel Task App
 
-This is a test assessment application. This application is built on Laravel framework. It utilizes different JS  libraries and packages such as jQuery, Ajax, Sweetalert2 and daterange picker.
+This is a test assessment application. This application is built on Laravel framework. It utilizes different JS  libraries and packages such as jQuery, Ajax, Sweetalert2 and select2.
 
 ## Prerequisites
 For running the application, please make sure your system has PHP, a version control system(e.g. git) and composer installed.
