@@ -19,8 +19,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
-        .dashboard-link{
+        .dashboard-link {
             text-decoration: none;
+        }
+
+        .active {
+            font-weight: bold;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -31,14 +36,29 @@
             <a class="navbar-brand" href="{{ url('/admin') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
-
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('company')) ? 'active' : '' }}"
+                               href="{{route('company.index')}}">Companies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('department')) ? 'active' : '' }}"
+                               href="{{route('department.index')}}">Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('employee')) ? 'active' : '' }}"
+                               href="{{route('employee.index')}}">Employees</a>
+                        </li>
+                    @endauth
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -52,7 +72,8 @@
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
 

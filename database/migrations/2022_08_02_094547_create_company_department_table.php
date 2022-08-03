@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeDepartmentsTable extends Migration
+class CreateCompanyDepartmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateEmployeeDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_departments', function (Blueprint $table) {
+        Schema::create('company_department', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('department_id');
 
-            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateEmployeeDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_departments');
+        Schema::dropIfExists('company_departments');
     }
 }

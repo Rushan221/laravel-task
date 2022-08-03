@@ -10,7 +10,7 @@ class CompanyDepartment extends Model
 {
     use HasFactory;
 
-    protected $table = 'company_departments';
+    protected $table = 'company_department';
     protected $guarded = [];
 
     /**
